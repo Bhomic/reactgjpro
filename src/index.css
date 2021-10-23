@@ -49,3 +49,11 @@ address{
 .navbar-dark {
   background-color: #512DA8;
 }
+
+.flexrow{
+  display: flex;
+}
+
+.rightmargin{
+  margin-right: 20px;
+}
