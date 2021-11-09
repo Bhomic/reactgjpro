@@ -32,6 +32,9 @@ class CommentForm extends Component{
     handleContactFormSubmit(values){
         console.log("Current Contact Form State : "+JSON.stringify(values));
         alert("Current Contact Form State : "+JSON.stringify(values));
+
+        this.props.addComment(this.props.dishId, values.rating, values.yourname, values.comment);
+
         this.toggleContactForm();
     }
 
@@ -101,36 +104,53 @@ class CommentForm extends Component{
 }
 
 
-function RenderComments(props){
-    const comments = props.comments;
-    return(
-        comments.map((comment)=>{
-            /*
-            My implementation of date formatting...
-            const date = comment.date.slice(0,10);
-            console.log(date);
-            const year = date.slice(0,4);
-            const month = date.slice(5,7);
-            const dt = date.slice(9,11);
 
-            const monthindex = parseInt(month);
-            console.log(monthindex);
+function RenderComments({comments, addComment, dishId}) {    
+    const commentspopulated = comments.map((comment)=>{
+        /*
+        My implementation of date formatting...
+        const date = comment.date.slice(0,10);
+        console.log(date);
+        const year = date.slice(0,4);
+        const month = date.slice(5,7);
+        const dt = date.slice(9,11);
 
-            let months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+        const monthindex = parseInt(month);
+        console.log(monthindex);
 
-            const chmonth = months[monthindex-1];
-            */
+        let months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
-            return(
+        const chmonth = months[monthindex-1];
+        */
+
+        /*
+         <Media tag="li" className="unstyledlist">
+                    <Media heading>{comment.comment}</Media>
+                    
+                    <Media description>--{comment.author}, {new Intl.DateTimeFormat('en-US', {year:'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</Media>
+                </Media>
+        */
+
+        return(
             <div key={comment.id} className="mt-3 mb-3">   
-            <Media tag="li" className="unstyledlist">
-                <Media heading>{comment.comment}</Media>
-                <Media description>--{comment.author}, {new Intl.DateTimeFormat('en-US', {year:'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</Media>
-            </Media>   
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <p>{comment.comment}</p>
+                        <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                    </div>
+                </div>
+
             </div>
-            );
-        })
-    );
+        );
+        });
+
+    return(
+        <div className="col-12 col-md-5 m-1">
+            {commentspopulated}
+            <CommentForm dishId={dishId} addComment={addComment} />
+        </div>
+        );
 }
 
 function RenderDish(props){
@@ -180,10 +200,10 @@ const DishDetail = (props)=>{
             <div className="col-12 col-md-5 m-1">
                 <RenderDish dish={props.dish} />
             </div>
-            <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.comments} />
-                <CommentForm />
-            </div>
+            <RenderComments comments={props.comments}
+                addComment={props.addComment}
+                dishId={props.dish.id}
+            />  
         </div>
         </div>
     );
