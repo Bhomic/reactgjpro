@@ -36,7 +36,9 @@ class CommentForm extends Component{
         console.log("Current Contact Form State : "+JSON.stringify(values));
         alert("Current Contact Form State : "+JSON.stringify(values));
 
-        this.props.addComment(this.props.dishId, values.rating, values.yourname, values.comment);
+        //this.props.addComment(this.props.dishId, values.rating, values.yourname, values.comment);
+
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
 
         this.toggleContactForm();
     }
@@ -108,7 +110,7 @@ class CommentForm extends Component{
 
 
 
-function RenderComments({comments, addComment, dishId}) {    
+function RenderComments({comments, postComment, dishId}) {
     const commentspopulated = comments.map((comment)=>{
         /*
         My implementation of date formatting...
@@ -151,7 +153,7 @@ function RenderComments({comments, addComment, dishId}) {
     return(
         <div className="col-12 col-md-5 m-1">
             {commentspopulated}
-            <CommentForm dishId={dishId} addComment={addComment} />
+            <CommentForm dishId={dishId} postComment={postComment} />
         </div>
         );
 }
@@ -224,7 +226,7 @@ const DishDetail = (props)=>{
                 <RenderDish dish={props.dish} />
             </div>
             <RenderComments comments={props.comments}
-                addComment={props.addComment}
+                postComment={props.postComment}
                 dishId={props.dish.id}
             />  
         </div>
