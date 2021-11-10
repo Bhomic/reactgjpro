@@ -18,25 +18,25 @@ import { actions } from 'react-redux-form';
 import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 
 
+const mapStateToProps = (state)=>{
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+}
+
+
+
 const mapDispatchToProps = dispatch => ({
     addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishes())},
     resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
     fetchComments: () => dispatch(fetchComments()),
     fetchPromos: () => dispatch(fetchPromos())
-  });
-
-
-
-const mapDispatchToProps = dispatch => ({
-  
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-
-    fetchDishes: () => { dispatch(fetchDishes())},
-
-    resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
-  
 });
+
 
 class Main  extends Component{
 
@@ -54,7 +54,7 @@ class Main  extends Component{
         this.props.fetchComments();
         this.props.fetchPromos();
       }
-      
+          
 
     /*onDishSelect(dishId) {
         this.setState({ selectedDish: dishId});
@@ -74,8 +74,8 @@ class Main  extends Component{
                 promoLoading={this.props.promotions.isLoading}
                 promoErrMess={this.props.promotions.errMess}
                 leader={this.props.leaders.filter((leader) => leader.featured)[0]}
-                />            
-            );
+            />
+              );
           }
 
         const DishWithId = ({match}) => {
@@ -86,7 +86,8 @@ class Main  extends Component{
                 comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
                 commentsErrMess={this.props.comments.errMess}
                 addComment={this.props.addComment}
-                />
+              />
+     
             );
           };
        
