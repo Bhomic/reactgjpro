@@ -38,7 +38,7 @@ class CommentForm extends Component{
 
         //this.props.addComment(this.props.dishId, values.rating, values.yourname, values.comment);
 
-        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.yourname, values.comment);
 
         this.toggleContactForm();
     }
