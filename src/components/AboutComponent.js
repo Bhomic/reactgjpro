@@ -6,8 +6,13 @@ import { baseUrl } from '../shared/baseUrl';
 
 import {Loading} from './LoadingComponent';
 
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+
+
 function RenderLeader({leader}){
 return (
+
+    <Fade in>
         <div className="row mt-5" >
                 <Media  key={leader.id} >
                     <div className="flexrow">
@@ -22,6 +27,7 @@ return (
                     </div>
                 </Media>
         </div>
+    </Fade>    
     );
 }
 
@@ -30,7 +36,9 @@ function About(props) {
     console.log(props);    
     const leaders = props.leaders.leaders.map((leader) => {
         return(
-        <RenderLeader leader={leader}></RenderLeader>  
+
+
+                <RenderLeader leader={leader}></RenderLeader>
         );
     });
 
@@ -112,10 +120,13 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <div className="container">
-                        
+
                         <Media list>
-                            {leaders}
-                        </Media>                    
+                            <Stagger in>
+                                {leaders}
+                            </Stagger>
+                        </Media>       
+
                     </div>
                 </div>
             </div>
